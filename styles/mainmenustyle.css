@@ -1,0 +1,17 @@
+h1 {
+	font-family:"Comic Sans MS";
+	text-align: center;
+}
+#menubuttonscontainer {
+	align-content: center;
+	text-align: center;
+}
+
+.menubutton {
+	
+}
+
+button:hover {
+	opacity: 50%;
+	text-emphasis-color: white;
+}
