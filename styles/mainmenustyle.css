@@ -1,17 +1,5 @@
-h1 {
-	font-family:"Comic Sans MS";
-	text-align: center;
-}
-#menubuttonscontainer {
+.collegephoto {
 	align-content: center;
-	text-align: center;
-}
-
-.menubutton {
-	
-}
-
-button:hover {
-	opacity: 50%;
-	text-emphasis-color: white;
+	margin-top: 20px;
+	width: 630px;
 }

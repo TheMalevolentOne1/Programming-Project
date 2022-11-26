@@ -1,5 +1,5 @@
-window.onload = () => {
-	document.getElementById("menubuttonscontainer").addEventListener("click", clickItem => {
-		alert(clickItem.data)
-	});
-}
+window.addEventListener("load", () => {
+	document.body.querySelectorAll("button").addEventListener("click", () => {
+		document.writeln("Hello World");
+	})
+})

@@ -1,0 +1,23 @@
+body {
+	background-color: lightgrey;
+}
+
+.container {
+	text-align: center;
+}
+ 
+h1 {
+	font-family: "comic sans ms";
+	font-size: 29px;
+}
+
+.menubutton {
+	background-color: white;
+	font-size: 20px;
+	text-shadow: 5px, 5px, 0px, green;
+}
+
+button:hover {
+	background-color: darkslategray;
+	color: white;
+}
