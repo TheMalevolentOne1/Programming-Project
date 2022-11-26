@@ -8,6 +8,7 @@ body {
  
 h1 {
 	font-family: "comic sans ms";
+	text-decoration: underline;
 	font-size: 29px;
 }
 
