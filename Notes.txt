@@ -1,0 +1,8 @@
+Notes for issues:
+
+The GET request from the JS to PHP follows through accordingly with a connection of 200 (OK) 
+The RESPONSE however goes to the wrong  URL 
+Potential Solution: Move files into htdocs folder so the URL response matches file directory
+Other Solution: Figure out a way to redirect the return RESPONSE URL so that the main site is affected and not the PHP site.
+
+Connection: keep-alive (check for issues with that) 
