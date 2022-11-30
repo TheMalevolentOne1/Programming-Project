@@ -9,13 +9,12 @@ body {
 h1 {
 	font-family: "comic sans ms";
 	text-decoration: underline;
-	font-size: 29px;
+	font-size: 30px;
 }
 
 .menubutton {
 	background-color: white;
 	font-size: 20px;
-	text-shadow: 5px, 5px, 0px, green;
 }
 
 button:hover {
