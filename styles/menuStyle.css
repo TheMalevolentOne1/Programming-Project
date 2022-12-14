@@ -15,10 +15,12 @@ h1 {
 .menubutton {
 	background-color: white;
 	font-size: 20px;
+	outline: none;
+	border: 1px solid #dddddd;
+	border-radius: 4px
 }
 
 button:hover {
-	background-color: darkslategray;
+	background-color: black;
 	color: white;
-}.studentForm {
 }

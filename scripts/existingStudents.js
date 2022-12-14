@@ -4,9 +4,5 @@ fetch("../database.php?sql="+sql, {method:"GET"}).then(res => {
 }).catch(err => { alert(err); })
 
 const sqlfunc = (data) => {
-	document.addEventListener("DOMContentLoaded", () => {
-		const item = document.createElement("div");
-		item.id = "Hello";
-		document.body.innerHTML += `<h1>${data}</h1>`;
-	})
+	console.log(data.caller);
 }
