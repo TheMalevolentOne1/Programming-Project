@@ -31,11 +31,12 @@
 			<td>Hello World</td>
 			
 		</table>
-		<form class="studentForm">
-			<p>Student ID: <input type="text"></p>
-			<p>Student Forename: <input type="text"></p>
-			<p>Student Surname: <input type="text"></p>
-			<p>Student Individual: <input type="checkbox"></p>
+		<form id="studentForm">
+			<p>Student ID: <input type="text" placeholder="Enter ID" ></p>
+			<p>Student Forename: <input type="text" placeholder="Enter Forename"></p>
+			<p>Student Surname: <input type="text" placeholder="Enter Surname"></p>
+			<p>Student Individual: <input type="checkbox" id="checkTeam"></p>
+			<p id="teamID" hidden="true">Team ID: <input type="number" placeholder="Enter Team ID"></p>
 			<button type="submit">Add Student</button>
 			<button type="submit">Remove Student</button>
 		</form>
