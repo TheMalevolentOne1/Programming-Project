@@ -13,6 +13,6 @@
 			}
 		}
 		
-		return $tableValues;
+		return json_encode($tableValues);
 	}
 ?>

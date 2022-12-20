@@ -8,6 +8,9 @@
 	<link rel="stylesheet" href="../styles/menuStyle.css">
 	<link rel="stylesheet" href="../styles/studentStyle.css"
 	<meta charset="utf-8">
+	<script type="text/javascript">
+			const array = <?=sqlFunction("SELECT * FROM tblStudents");?>;
+	</script>
 </head>
 
 <body>
@@ -25,8 +28,16 @@
 	<div class="content">
 		<img src="../images/students.png" alt="Image of Student" width="500px" height="250px">
 		<table>
-			<tr>
-				<th>Hello World</th>
+			<tr id="columnNames">
+				<script type="text/javascript">
+					array.forEach((e, i) => {
+						if (i % 2 == 0 || i == 0) {
+							var newTh = document.createElement("th");
+							newTh.innerHTML = array[i];
+							$('#columnNames').append(newTh);
+						}
+					})
+				</script>
 			</tr>
 			<td>Hello World</td>
 			
@@ -35,7 +46,7 @@
 			<p>Student ID: <input type="text" placeholder="Enter ID" ></p>
 			<p>Student Forename: <input type="text" placeholder="Enter Forename"></p>
 			<p>Student Surname: <input type="text" placeholder="Enter Surname"></p>
-			<p>Student Individual: <input type="checkbox" id="checkTeam"></p>
+			<p>Student Type: <input type="radio" name="teamorindiv" class="studentInd" id="TeamCheck"> Team <input type="radio" name="teamorindiv" class="studentInd"> Individual</input></p>
 			<p id="teamID" hidden="true">Team ID: <input type="number" placeholder="Enter Team ID"></p>
 			<button type="submit">Add Student</button>
 			<button type="submit">Remove Student</button>

@@ -1,10 +1,11 @@
 $(document).ready(()=>{
-	$('#checkTeam').click((checkbox) => {
-		checkbox.target.checked ? $('#teamID').show() : $('#teamID').hide(); 
+	$('.studentInd').click((checkbox) => {
+		checkbox.target.checked && checkbox.target.id == "TeamCheck" ? $('#teamID').show() : $('#teamID').hide();
+		console.log(checkbox.target.checked)
 	});
 });
 
-$(document).submit((formData) => {
+$('#studentForm').submit((formData) => {
 	formData.preventDefault()
 	console.log(formData)
 })
