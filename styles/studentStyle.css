@@ -1,21 +1,35 @@
-/*.content {
-	margin-left: 50px;
-	margin-top: 50px;
+.content {
+	margin: 50px;
+	vertical-align: middle;
 }
 
-form {
+table {
+	vertical-align: top;	
 	display: inline-block;
-	position: absolute;
-	right: 500px;
+	margin-left: 150px;
+	border: 1.5px solid black
 }
 
-input {
-	display: block;
-}
-
-label {
-	text-decoration-style: bold;
+th, td {
+	border: 1px solid black;
 	text-align: center;
-	font-size: 17px;
-}*/
+	border-radius: 2.5px;
+}
 
+#studentForm {
+	vertical-align: top;
+	display: inline-block;
+	margin-left: 150px;
+}
+
+.stuInput {
+	display: table-column;
+	text-align: center;
+	margin-left: 20px;
+	float: right;
+}
+
+#submitButtons {
+	display: block;
+	text-align:center;
+}
