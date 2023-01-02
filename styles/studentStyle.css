@@ -1,4 +1,6 @@
 .content {
+	display: block;
+	text-align: center;
 	margin: 50px;
 	vertical-align: middle;
 }
@@ -16,10 +18,15 @@ th, td {
 	border-radius: 2.5px;
 }
 
-#studentForm {
+#OptionSelector {
+	display:inline-block;
+	vertical-align: top;
+	margin-left: 50px;
+}
+
+form {
 	vertical-align: top;
 	display: inline-block;
-	margin-left: 150px;
 }
 
 .stuInput {
