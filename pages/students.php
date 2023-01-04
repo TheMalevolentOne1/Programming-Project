@@ -27,8 +27,7 @@
 		<table id="table">
 			<tr id="columnNames">
 				<script type="text/javascript">
-					const array = <?=sqlFunction('SELECT tblStudents."Student ID", tblStudents."Student Forename", tblStudents."Student Surname", tblStudents."Student Type", tblTeams."Team Name", tblTeams."Team ID" FROM tblStudents INNER JOIN tblTeams ON tblStudents."Team ID" = tblTeams."Team ID";')?>;
-					console.log(array)
+					const array = <?=sqlFunction('SELECT tblStudents."Student ID", tblStudents."Student Forename", tblStudents."Student Surname", tblTeams."Team Name" FROM tblStudents INNER JOIN tblTeams ON tblStudents."Team ID" = tblTeams."Team ID";')?>;
 					array.forEach((e, i) => {
 						if (typeof(e) === "string") {
 							const newTH = document.createElement("th");
@@ -44,7 +43,6 @@
 				let num = 0
 				array.forEach((e) => {
 					for (let i = 0; i < e.length; i += hAmount) {
-						console.log(i)
 						const newTR = document.createElement("tr");
 						$('#table').append(newTR);
 						for (let c = 0; c < hAmount; c++) {
@@ -57,9 +55,11 @@
 				})
 			</script>
 		</table>
-		<div id="OptionSelector">
-			<button id="ShowAddStudent">Add Student Form</button>
-			<button id="ShowRemoveStudent">Remove Student Form</button>
+		<div id="formsDiv">
+			<div id="OptionSelector">
+				<button id="ShowAddStudent" class="optionSel">Add Student Form</button>
+				<button id="ShowRemoveStudent" class="optionSel">Remove Student Form</button>
+			</div>
 			<div id="AddStudentDiv">
 				<form id="addStudentForm">
 					<p>Student ID: <input type="text" placeholder="Enter ID" class="stuInput"></p>
@@ -67,15 +67,13 @@
 					<p>Student Surname: <input type="text" placeholder="Enter Surname" class="stuInput"></p>
 					<p>Student Type: <input type="radio" name="teamorindiv" class="studentInd" id="TeamCheck" class="stuInput"> Team <input type="radio" name="teamorindiv" class="studentInd" checked="true"> Individual</input></p>
 					<p id="teamID" hidden="true">Team ID: <input type="number" placeholder="Enter Team ID" class="stuInput"></p>
-					<div id="submitButtons">
-						<button type="submit" class="SubmitButton">Add Student</button>
-						<button type="submit" class="SubmitButton">Remove Student</button>
-					</div>
+					<button type="submit" class="SubmitButton">Add Student</button>
 				</form>
 			</div>
-			<div id="RemoveStudentDiv">
+			<div id="RemoveStudentDiv" hidden="false">
 				<form id="removeStudentForm">
-					<p>Student ID: <input type="number" maxlength="1"></p>
+					<p>Student ID: <input type="number"></p>
+					<button type="submit" class="SubmitButton">Remove Student</button>
 				</form>
 			</div>
 		</div>

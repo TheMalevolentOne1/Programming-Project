@@ -14,7 +14,7 @@ $(document).ready(()=>{
 	})
 });
 
-$('#studentForm').submit((formData) => {
+$('#addStudentForm').submit((formData) => {
 	formData.preventDefault()
 	console.log(formData)
 })
