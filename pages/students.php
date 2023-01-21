@@ -3,11 +3,49 @@
 <head>
 	<?php include "../scripts/database.php"; ?>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<script src="../scripts/existingStudents.js"></script>
 	<title>Students Page</title>
 	<link rel="stylesheet" href="../styles/menuStyle.css">
 	<link rel="stylesheet" href="../styles/studentStyle.css">
 	<meta charset="utf-8">
+	<script type="text/javascript">
+		$(document).ready(()=>{
+			$('.studentInd').click((checkbox) => {
+				checkbox.target.checked && checkbox.target.id == "TeamCheck" ? $('#teamID').show() : $('#teamID').hide();
+				
+				checkbox.target.checked && checkbox.target.id == "indv" ? $('#TeamCheck').checked = !$('#TeamCheck').checked : $('#TeamCheck').checked = $('#TeamCheck').checked
+			});
+			
+			$('#ShowRemoveStudent').click(() => {
+				$('#AddStudentDiv').hide();
+				$('#RemoveStudentDiv').show();
+			});
+	
+			$('#ShowAddStudent').click(() => {
+				$('#AddStudentDiv').show();
+				$('#RemoveStudentDiv').hide();
+			});
+	
+			$('#addStudentForm').submit((formData) => {
+				formData.preventDefault();
+				var formArr = $(formData.target).serializeArray();
+				if (formArr.includes("")) {
+					alert("Some of the entry fields are empty!")
+					return
+				}
+				formArr.forEach((data) => {
+					tdArr = $('td').toArray()
+					for (let xd=0; xd < tdArr.length - 1; xd++) {
+						if (data.value == tdArr[xd].value) {
+							if (data.name === "stuID") {
+								alert("Invalid Student ID")
+								break
+							}
+						}
+					}
+				});
+			});
+		});
+	</script>
 </head>
 
 <body>
@@ -62,17 +100,23 @@
 			</div>
 			<div id="AddStudentDiv">
 				<form id="addStudentForm">
-					<p>Student ID: <input type="text" placeholder="Enter ID" class="stuInput"></p>
-					<p>Student Forename: <input type="text" placeholder="Enter Forename" class="stuInput"></p>
-					<p>Student Surname: <input type="text" placeholder="Enter Surname" class="stuInput"></p>
-					<p>Student Type: <input type="radio" name="teamorindiv" class="studentInd" id="TeamCheck" class="stuInput"> Team <input type="radio" name="teamorindiv" class="studentInd" checked="true"> Individual</input></p>
+					<p>Student ID: <input type="text" placeholder="Enter ID" class="stuInput" name="stuID" id=StuID></p>
+					<script>
+						$('#StuID').attr({"min": ($('td').length / $('th').length) + 1});
+					</script>
+					<p>Student Forename: <input type="text" placeholder="Enter Forename" class="stuInput" name="stuForename"></p>
+					<p>Student Surname: <input type="text" placeholder="Enter Surname" class="stuInput" name="stuSurname"></p>
+					<p>Student Type: <input type="radio" name="Team" name="teamorindiv"  class="studentInd" id="TeamCheck" class="stuInput">Team <input type="radio" name="Individual"  name="teamorindiv" class="studentInd" checked="true" id="indv"> Individual</input></p>
 					<p id="teamID" hidden="true">Team ID: <input type="number" placeholder="Enter Team ID" class="stuInput"></p>
 					<button type="submit" class="SubmitButton">Add Student</button>
 				</form>
 			</div>
 			<div id="RemoveStudentDiv" hidden="false">
 				<form id="removeStudentForm">
-					<p>Student ID: <input type="number"></p>
+					<p>Student ID: <input type="number" id="removeStudentID"></p>
+					<script>
+						$('#removeStudentID').attr({"min": 1,"max": $('td').length / $('th').length});
+					</script>
 					<button type="submit" class="SubmitButton">Remove Student</button>
 				</form>
 			</div>

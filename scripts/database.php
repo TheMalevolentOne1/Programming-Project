@@ -20,4 +20,8 @@
 		
 		return json_encode($resultTable);
 	}
+
+	if (isset($GET['sql'])) {
+		sqlFunction($GET['sql']);
+	}
 ?>
