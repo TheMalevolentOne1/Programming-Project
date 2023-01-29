@@ -5,7 +5,7 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<title>Students Page</title>
 	<link rel="stylesheet" href="../styles/menuStyle.css">
-	<link rel="stylesheet" href="../styles/studentStyle.css">
+	<link rel="stylesheet" href="../styles/phpSiteStyle.css">
 	<meta charset="utf-8">
 	<script type="text/javascript">
 		$(document).ready(()=>{
@@ -28,17 +28,17 @@
 			$('#addStudentForm').submit((formData) => {
 				formData.preventDefault();
 				var formArr = $(formData.target).serializeArray();
-				if (formArr.includes("")) {
-					alert("Some of the entry fields are empty!")
-					return
-				}
+				formArr.forEach((data) => { 
+					
+				})
 				formArr.forEach((data) => {
 					tdArr = $('td').toArray()
 					for (let xd=0; xd < tdArr.length - 1; xd++) {
-						if (data.value == tdArr[xd].value) {
-							if (data.name === "stuID") {
-								alert("Invalid Student ID")
-								break
+						if (data.value == tdArr[xd].innerHTML) {
+							switch(data.name) {
+								case("stuID"):
+									alert("Student ID is Empty!");
+									break;
 							}
 						}
 					}
@@ -53,11 +53,10 @@
 		<h1>Students</h1>
 		<div id="menupagecontainer">
 			<a href="../MainMenu.html"><button class="menubutton">Main Menu</button></a>
-			<a href="pages/events.html"><button class="menubutton">Events</button></a>
-			<a href="pages/leaderboards.html"><button class="menubutton">Leaderboards</button></a>
-			<a href="pages/teams.html"><button class="menubutton">Teams</button></a>
-			<a href="pages/admin.html">
-			<button class="menubutton">Admin</button></a>
+			<a href="events.php"><button class="menubutton">Events</button></a>
+			<a href="leaderboards.php"><button class="menubutton">Leaderboards</button></a>
+			<a href="teams.php"><button class="menubutton">Teams</button></a>
+			<a href="admin.html"><button class="menubutton">Admin</button></a>
 		</div>
 	</div>
 	<div class="content">
@@ -65,7 +64,7 @@
 		<table id="table">
 			<tr id="columnNames">
 				<script type="text/javascript">
-					const array = <?=sqlFunction('SELECT tblStudents."Student ID", tblStudents."Student Forename", tblStudents."Student Surname", tblTeams."Team Name" FROM tblStudents INNER JOIN tblTeams ON tblStudents."Team ID" = tblTeams."Team ID";')?>;
+					const array = <?=sqlFunction('SELECT tblStudents."Student ID", tblStudents."Student Forename", tblStudents."Student Surname", tblTeams."Team Name" FROM tblStudents JOIN tblTeams ON tblStudents."Team ID" = tblTeams."Team ID";')?>;
 					array.forEach((e, i) => {
 						if (typeof(e) === "string") {
 							const newTH = document.createElement("th");
