@@ -8,20 +8,33 @@
 	<link rel="stylesheet" href="../styles/phpSiteStyle.css">
 	<meta charset="utf-8">
 	<script type="text/javascript">
-		$('#fmRemoveTeam').submit((formData) =>{
-			formData.preventDefault();
-			var formArr = $(formData.target).serializeArray();
-			formArr.forEach((data) => {
-				tdArr = $('td').toArray()
-				for (let xd=0; xd < tdArr.length - 1; xd++) {
-					if (data.value == tdArr[xd].innerHTML) {
-						switch(data.name) {
-							case("teamID"):
-								alert("Team ID is Empty!");
-								break;
+		$(document).ready(() => {
+			$('#AddForm').click((formClick) => {
+				console.log($('#addTeamDiv').hidden)
+				$('#addTeamDiv').show();
+				$('#removeTeamDiv').hide();
+			});
+		
+			$('#RemoveForm').click((formClick) => {
+				$('#removeTeamDiv').show();
+				$('#addTeamDiv').hide();
+			});
+			
+			$('form').submit((formData) =>{
+				formData.preventDefault();
+				var formArr = $(formData.target).serializeArray();
+				console.log(formArr)
+				tdArr = $('td').toArray();
+				formArr.forEach((data) => {
+					for (let i = 0; i < tdArr.length; i++) {
+						if (data.value == tdArr[i].innerHTML && data.name == "Team ID") {
+							alert("Team ID Already Exists!");
+						} else if (data.value == tdArr[i].innerHTML && data.name == "Team Name") {
+							alert("Team Name Already Exists!");
 						}
 					}
-				}
+					
+				});
 			});
 		});
 	</script>
@@ -80,14 +93,14 @@
 			<button id="RemoveForm">Remove Team Form</button>
 			<div id="addTeamDiv">
 				<form id="fmAddTeam">
-					<p>Team ID: <input type="number" name="teamID"></p>
-					<p>Team Name: <input type="text"></p>
+					<p>Team ID: <input type="number" name="Team ID"></p>
+					<p>Team Name: <input type="text" name="Team Name"></p>
 					<button type="submit">Add Team</button>
 				</form>
 			</div>
 			<div id="removeTeamDiv" hidden>
 				<form id="fmRemoveTeam">
-					<p>Team ID: <input type="number" name="TeamID" id="teamIDInput"></p>
+					<p>Team ID: <input type="number" name="Team ID" id="teamIDInput"></p>
 					<script type="text/javascript">
 						$('teamIDInput').attr({"min": 1,"max": $('td').length / $('th').length})
 					</script>
