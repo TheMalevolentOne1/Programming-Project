@@ -25,15 +25,26 @@
 				var formArr = $(formData.target).serializeArray();
 				console.log(formArr)
 				tdArr = $('td').toArray();
+				vals = [];
 				formArr.forEach((data) => {
 					for (let i = 0; i < tdArr.length; i++) {
 						if (data.value == tdArr[i].innerHTML && data.name == "Team ID") {
 							alert("Team ID Already Exists!");
+							break;
 						} else if (data.value == tdArr[i].innerHTML && data.name == "Team Name") {
 							alert("Team Name Already Exists!");
+							break;
+						} else if (data.value == "" && data.name == "Team ID") {
+							alert("Team ID is Empty!");
+							break;
+						} else if (data.value == "" && data.name == "Team Name") {
+							alert("Team Name is Empty!")
+							break;  
+						} else {
+							vals.push(data.value)
+							break;
 						}
 					}
-					
 				});
 			});
 		});
