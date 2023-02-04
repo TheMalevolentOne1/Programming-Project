@@ -23,37 +23,77 @@
 			$('form').submit((formData) =>{
 				formData.preventDefault();
 				var formArr = $(formData.target).serializeArray();
-				console.log(formArr)
-				tdArr = $('td').toArray();
-				vals = [];
-				formArr.forEach((data) => {
-					for (let i = 0; i < tdArr.length; i++) {
-						if (data.value == tdArr[i].innerHTML && data.name == "Team ID") {
-							alert("Team ID Already Exists!");
-							break;
-						} else if (data.value == tdArr[i].innerHTML && data.name == "Team Name") {
-							alert("Team Name Already Exists!");
-							break;
-						} else if (data.value == "" && data.name == "Team ID") {
-							alert("Team ID is Empty!");
-							break;
-						} else if (data.value == "" && data.name == "Team Name") {
-							alert("Team Name is Empty!")
-							break;  
+				if (formData.target.id == "fmAddTeam") {
+					tdArr = $('td').toArray();
+					vals = [];
+					formArr.forEach((data) => {
+						for (let i = 0; i < tdArr.length; i++) {
+							if (data.value == tdArr[i].innerHTML && data.name == "Team Name") {
+								alert("Team Name Already Exists!");
+								window.location = window.location; //Prevents SQL from being run!
+							} else if (data.value == "" && data.name == "Team Name") {
+								alert("Team Name is Empty!")
+								window.location = window.location;
+							} else {
+								if (!vals.includes(data.value)) {
+									vals.push(data.value);
+								}
+							}
+						}
+					});
+				
+					if (!vals.includes("")) {
+						let sql = "INSERT INTO 'tblTeams'('Team ID', 'Team Name') VALUES ("+vals[0]+`, "${vals[1]}"`
+						console.log(sql)
+						fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then((res) => {
+							if (res.status == 200) {
+							window.location = window.location;
 						} else {
-							vals.push(data.value)
-							break;
+							console.log(res);
+						}
+						});
+					}
+				}
+				
+				if (formData.target.id == "fmRemoveTeam") {
+					tdArr = $('td').toArray();
+					alertSent = false;
+					if (formArr[0].value == "") {
+						alert("Team ID is Empty!");
+						return;
+					} else {
+						for (let i = 0; i < tdArr.length - 1; i++) {
+							if (tdArr[i].innerHTML != formArr[0].value && i == tdArr.length - 2) {
+								alert("Team ID is invalid!");
+								alertSent = true;
+							}
 						}
 					}
-				});
+					
+					if (!alertSent) {
+						let rowRemove = formArr[0].value
+						let sql = `DELETE FROM 'tblTeams' WHERE "Team ID" = "${rowRemove}"`;
+						fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then(res => {
+							if (res.status == 200) {
+								window.location = window.location;
+							} else {
+								console.log(res);
+							}
+						});
+					} else {
+						return;	
+					}
+ 					
+				}
 			});
+			
 		});
 	</script>
 </head>
 
 <body>
 	<div class="container">
-		<h1>Students</h1>
+		<h1>Teams</h1>
 		<div id="menupagecontainer">
 			<a href="../MainMenu.html"><button class="menubutton">Main Menu</button></a>
 			<a href="students.php"><button class="menubutton">Students</button></a>
@@ -73,7 +113,6 @@
 					const array = <?=sqlFunction('SELECT * FROM tblTeams;')?>;
 					array.forEach((e, i) => {
 						if (typeof(e) === "string") {
-							console.log(e)
 							const newTH = document.createElement("th");
 							newTH.innerHTML = e;
 							$('#columnNames').append(newTH);
@@ -84,19 +123,19 @@
 		  </tr>
 		  <script type="text/javascript">
 				const hAmount = $('th').length;
-				let num = 0
+				let num = 0;
 				array.forEach((e) => {
 					for (let i = 0; i < e.length; i += hAmount) {
 						const newTR = document.createElement("tr");
 						$('#table').append(newTR);
 						for (let c = 0; c < hAmount; c++) {
-							const newTD = document.createElement("td")
+							const newTD = document.createElement("td");
 							newTD.innerHTML = e[num];
-							newTR.append(newTD)
-							num++
+							newTR.append(newTD);
+							num++;
 						}
 					}
-				})
+				});
 			</script>
 		</table>
 		<div id="FormButtons">
@@ -104,8 +143,12 @@
 			<button id="RemoveForm">Remove Team Form</button>
 			<div id="addTeamDiv">
 				<form id="fmAddTeam">
-					<p>Team ID: <input type="number" name="Team ID"></p>
-					<p>Team Name: <input type="text" name="Team Name"></p>
+					<p>Team ID: <input type="number" id="TeamIDInput" name="Team ID" placeholder="Enter ID"></p>
+					<script type=text/javascript> 
+						$('#TeamIDInput').attr({"min": Number($('td')[$('td').length - 2].innerHTML) + 1});
+						$('#TeamIDInput')[0].value = Number($('td')[$('td').length - 2].innerHTML) + 1;
+					</script>
+					<p>Team Name: <input type="text" name="Team Name" placeholder="Enter Name"></p>
 					<button type="submit">Add Team</button>
 				</form>
 			</div>
@@ -113,7 +156,7 @@
 				<form id="fmRemoveTeam">
 					<p>Team ID: <input type="number" name="Team ID" id="teamIDInput"></p>
 					<script type="text/javascript">
-						$('teamIDInput').attr({"min": 1,"max": $('td').length / $('th').length})
+						$('#teamIDInput').attr({"min": $('td')[0].innerHTML});
 					</script>
 					<button type="submit">Remove Team</button>
 				</form>
