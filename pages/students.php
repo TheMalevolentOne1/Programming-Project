@@ -107,7 +107,7 @@
 						if (res.status == 200) {
 							window.location = window.location;
 						} else {
-							console.log(res)
+							console.log(res);
 						}
 					});
 				}

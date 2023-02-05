@@ -3,7 +3,7 @@
 <head>
 	<?php include "../scripts/database.php"; ?>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-	<title>Students Page</title>
+	<title>Events Page</title>
 	<link rel="stylesheet" href="../styles/menuStyle.css">
 	<link rel="stylesheet" href="../styles/phpSiteStyle.css">
 	<meta charset="utf-8">
@@ -34,15 +34,74 @@
 				var formArr = $(formData.target).serializeArray();
 				if (formData.target.id == "AddEvent") {
 					tdArr = $('td').toArray();
+					let sentAlert = false;
 					vals = [];
 					formArr.forEach((data) => {
 						for (let i = 0; i < tdArr.length; i++) {
-							
+							if (data.value == "") {
+								alert(data.name+" is Empty!");
+								sentAlert = true;
+								break;
+							} else if (data.name == "Event Type" && !['Individual', 'Team'].includes(data.value)) {
+								alert(data.name+" can only be either Individual or Team!");
+								sentAlert = true;
+								break;
+							}
+						}
+					});
+					
+					if (!sentAlert) {
+						let sql = `INSERT INTO "tblEvents" VALUES ("${formArr[0].value}", "${formArr[1].value}", "${formArr[2].value}", "${formArr[3].value}", "${formArr[4].value}", "${formArr[5].value}", "${formArr[6].value}")`
+						fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then(res => {
+							if (res.status == 200) {
+								console.log(res.url);
+							} else {
+								console.log(res);
+							}
 						});
-					} else {
-						return;	
 					}
- 					
+				} else if (formData.target.id == "RemoveEvent") {
+					let sql = `DELETE FROM 'tblEvents' WHERE "Event ID" = "${formArr[0].value} AND "Student ID" = ${formArr[1].value}`;
+					fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then((res)=>{
+						if (res.status == 200) {
+							window.location = window.location;
+						} else {
+							console.log(res);
+						}
+					});
+				} else if (formData.target.id == "AddEventResult") {
+					tdArr = $('td').toArray();
+					let sentAlert = false;
+					vals = [];
+					formArr.forEach((data) => {
+						for (let i = 0; i < tdArr.length; i++) {
+							if (data.value == "") {
+								alert(data.name+" is Empty!");
+								sentAlert = true;
+								break;
+							}
+						}
+					});
+					
+					if (!sentAlert) {
+						let sql = `INSERT INTO "tblEventResults" VALUES ("${formArr[0].value}", "${formArr[1].value}", "${formArr[2].value}")`
+						fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then(res => {
+							if (res.status == 200) {
+								console.log(res.url);
+							} else {
+								console.log(res);
+							}
+						});
+					}
+				} else if (formData.target.id == "RemoveEventResult") {
+					let sql = `DELETE FROM 'tblEventResults' WHERE "Event ID" = "${formArr[0].value}"`;
+					fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then((res)=>{
+						if (res.status == 200) {
+							window.location = window.location;
+						} else {
+							console.log(res);
+						}
+					});
 				}
 			});
 		});
@@ -130,7 +189,11 @@
 			<button type="button" id="removeEventForm">Remove Event Form</button>
 			<div id="addFormDiv">
 				<form id="AddEvent">
-					<p>Event ID: <input type="number" name="Event ID" placeholder="Enter ID"></p>
+					<p>Event ID: <input id="addEventID" type="number" name="Event ID" placeholder="Enter ID"></p>
+					<script type="text/javascript">
+						$('#addEventID').attr({"min": Number($('#table').find('td').toArray()[$('#table').find("td").length - $('#table').find('th').length].innerHTML) + 1});
+						$('#addEventID')[0].value = Number($('#table').find('td').toArray()[$('#table').find("td").length - $('#table').find('th').length].innerHTML) + 1;
+					</script>
 					<p>Event Name: <input type="text" name="Event Name" placeholder="Event Name"></p>
 					<p>Event Type: <input type="text" name="Event Type" placeholder="Enter Type"></p>
 					<p>First Place Points: <input type="number" name="First Place" placeholder="Enter First Place Points"></p>
@@ -153,9 +216,13 @@
 			<button type="button" id="removeEventResultForm">Remove Event Result Form</button>
 			<div id="addFormDivResult">
 				<form id="AddEventResult">
-					<p>Event ID: <input type="number" name="Event ID" placeholder="Enter Event ID"></p>
-					<p>Student ID: <input type="text" name="Student ID" placeholder="Enter Student ID"></p>
-					<p>Position Placed: <input type="text" name="Event Type" placeholder="Enter Type"></p>
+					<p>Event ID: <input id="EventID" type="number" name="Event ID" placeholder="Enter Event ID"></p>
+					<script type="text/javascript">
+						$('#EventID').attr({"min": 1});
+						$('#EventID')[0].value = 1;
+					</script>
+					<p>Student ID: <input type="number" name="Student ID" placeholder="Enter Student ID"></p>
+					<p>Position Placed: <input type="number" name="Position Placed" placeholder="Enter Type"></p>
 					<button type="submit">Add Event Result</button>
 				</form>
 			</div>
@@ -163,6 +230,7 @@
 			<div id="removeFormDivResult" hidden=true>
 				<form id="RemoveEventResult">
 					<p>Event ID: <input type="number" name="Event ID"></p>
+					<p>Student ID: <input type="number" name="Student ID"></p>
 					<button type="submit">Remove Event Result</button>
 				</form>
 			</div>
