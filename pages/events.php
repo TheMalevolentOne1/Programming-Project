@@ -10,13 +10,40 @@
 	<script type="text/javascript">
 		$(document).ready(()=>{
 			$('#addEventResultForm').click(()=>{
-				$('#addFormDivResult').show()
-				$('#RemoveEventResult').hide()
+				$('#addFormDivResult').show();
+				$('#removeFormDivResult').hide();
 			});
 			
 			$('#removeEventResultForm').click(()=>{
-				$('#addFormDivResult').show()
-				$('#RemoveEventResult').hide()
+				$('#addFormDivResult').hide();
+				$('#removeFormDivResult').show();
+			});
+			
+			$('#addEventForm').click(()=>{
+				$('#addFormDiv').show();
+				$('#removeFormDiv').hide();
+			});
+			
+			$('#removeEventForm').click(()=>{
+				$('#addFormDiv').hide();
+				$('#removeFormDiv').show();
+			});
+			
+			$('form').submit((formData) =>{
+				formData.preventDefault();
+				var formArr = $(formData.target).serializeArray();
+				if (formData.target.id == "AddEvent") {
+					tdArr = $('td').toArray();
+					vals = [];
+					formArr.forEach((data) => {
+						for (let i = 0; i < tdArr.length; i++) {
+							
+						});
+					} else {
+						return;	
+					}
+ 					
+				}
 			});
 		});
 	</script>

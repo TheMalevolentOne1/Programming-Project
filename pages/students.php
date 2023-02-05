@@ -79,13 +79,11 @@
 					
 					const teams = $('#teamsTable').find("td").toArray();
 					
-					teamValues = [];
+					const teamValues = [];
 					
 					teams.forEach((team) => {
-						teamValues.push(team.value);
+						teamValues.push(team.innerHTML);
 					});
-					
-					console.log(teamValues)
 					
 					if (!sentAlert) {
 						let sql = `INSERT INTO tblStudents VALUES ("${formArr[0].value}", "${formArr[1].value}", "${formArr[2].value}", 'Individual', NULL)`
@@ -96,12 +94,22 @@
 
 						fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then((res) => {
 							if (res.status == 200) {
-								console.log(res.url)
+								window.location = window.location;
 							} else {
 								console.log(res)
 							}
 						});	
 					}
+					
+				} else if (formData.target.id == "removeStudentForm") {
+					let sql = `DELETE FROM 'tblStudents' WHERE "Student ID" = "${formArr[0].value}"`;
+					fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then((res)=>{
+						if (res.status == 200) {
+							console.log(res.url);
+						} else {
+							console.log(res)
+						}
+					});
 				}
 			});
 		});
@@ -210,7 +218,7 @@
 			</div>
 			<div id="RemoveStudentDiv" hidden="false">
 				<form id="removeStudentForm">
-					<p>Student ID: <input type="number" id="removeStudentID" placeholder="Enter Student ID"></p>
+					<p>Student ID: <input type="number" id="removeStudentID" name="Student ID" placeholder="Enter Student ID"></p>
 					<script>
 						$('#removeStudentID').attr({"min": Number($('#studentTable').find('td').toArray()[0].innerHTML), "max": Number($('#studentTable').find('td').toArray()[$('#studentTable').find("td").length - $('#studentTable').find('th').length].innerHTML)});
 						$('#removeStudentID')[0].value = Number($('#studentTable').find('td').toArray()[0].innerHTML);
