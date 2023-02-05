@@ -105,7 +105,7 @@
 					let sql = `DELETE FROM 'tblStudents' WHERE "Student ID" = "${formArr[0].value}"`;
 					fetch("../scripts/database.php?sql="+sql, {method:"GET"}).then((res)=>{
 						if (res.status == 200) {
-							console.log(res.url);
+							window.location = window.location;
 						} else {
 							console.log(res)
 						}
