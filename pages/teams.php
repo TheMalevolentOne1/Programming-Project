@@ -53,9 +53,7 @@
 						}
 						});
 					}
-				}
-				
-				if (formData.target.id == "fmRemoveTeam") {
+				} else if (formData.target.id == "fmRemoveTeam") {
 					tdArr = $('td').toArray();
 					alertSent = false;
 					if (formArr[0].value == "") {
@@ -120,8 +118,8 @@
 						}
 					})
 				</script>
-		  </tr>
-		  <script type="text/javascript">
+		  	</tr>
+			<script type="text/javascript">
 				const hAmount = $('th').length;
 				let num = 0;
 				array.forEach((e) => {
