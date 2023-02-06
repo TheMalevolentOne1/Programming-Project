@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<title>Admin Page</title>
+	<link rel="stylesheet" href="../styles/menuStyle.css">
+	<link rel="stylesheet" href="../styles/phpSiteStyle.css">
+	<meta charset="utf-8">
+	<script type="text/javascript">
+		$(document).ready(()=>{
+			$('#download').click(()=>{
+				console.log("Hello")
+				const link = document.createElement("a");
+				link.href = "../database.db";
+				
+				window.open(link.href) 
+			});
+			
+			$('#deleteRecords').click(()=>{
+				const tables = ['tblStudents','tblEvents','tblEventResults','tblTeams']
+				
+				for (let i=0; i<tables.length; i++) {
+					let sql = "DELETE FROM "+tables[i];
+					fetch("../scripts/database.php?sql="+sql).then((res)=>{
+						if (res.status == 200) {
+							alert(tables[i] + " Records has been successfully deleted!");
+						} else {
+							alert(tables[i] + " Records has not been deleted as an Error Has Occurred!");
+						}
+					});
+				}
+			});
+			
+			$('#deleteTables').click(()=>{
+				const tables = ['tblStudents','tblEvents','tblEventResults','tblTeams']
+				
+				for (let i=0; i<tables.length; i++) {
+					let sql = "DROP TABLE "+tables[i];
+					fetch("../scripts/database.php?sql="+sql).then((res)=>{
+						if (res.status == 200) {
+							alert(tables[i] + " has been successfully deleted!");
+						} else {
+							alert(tables[i] + " has not been deleted as an Error Has Occurred!");
+						}
+					});
+				}
+			});
+		});
+	</script>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Admin</h1>
+		<div id="menupagecontainer">
+			<a href="../MainMenu.html"><button class="menubutton">Main Menu</button></a>
+			<a href="students.php"><button class="menubutton">Students</button></a>
+			<a href="events.php"><button class="menubutton">Events</button></a>
+			<a href="teams.php"><button class="menubutton">Teams</button></a>
+			<a href="leaderboards.php"><button class="menubutton">Admin</button></a>
+		</div>
+	</div>
+	<div class="content">
+		<button id="download">Download Database</button>
+		<button id="deleteRecords">Delete All Records</button>
+		<button id="deleteTables">Delete All Tables</button>
+	</div>
+</body>
+</html>
